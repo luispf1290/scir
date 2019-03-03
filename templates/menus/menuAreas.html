@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+	<h2 class="text-center">Areas</h2>
+ <section class="menus">
+   <div class="colum-1">
+
+   {% for area1 in colum1  %}
+   		<button><a href="{% url 'solicitud:newSolicitud'}">{{ area1.nombre_area }}</a></button>
+   {% endfor %}
+      <!--button><a href="servicio.html">Clin-1</a></button>
+      <button>Clin-2</button>
+      <button>Clin-3</button>
+      <button>Clin-4</button>
+      <button>Clin-5</button>
+      <button>Clin-6</button>
+      <button>Clin-7A</button>
+      <button>Clin-7B</button>
+      <button>Clin-Recup</button>
+      <button>Clin-UTIR</button>
+      <button>Clin-UCIR</button-->
+   </div>
+
+   <div class="colum-2">
+      {% for area2 in colum2 %}
+        <button><a href="{% url 'solicitud:newSolicitud' area2%}">{{ area2.nombre_area }}</a></button>
+      {% endfor %}
+      <!--button>CEYE</button>
+      <button>CIRU</button>
+      <button>Urg</button>
+      <button>Bronco</button>
+      <button>B-san</button>
+      <button>Hemo</button>
+      <button><a href="serv-edif1.html">Edif-1</a></button>
+      <button><a href="serv-edif2.html">Edif-2</a></button>
+      <button>Quimio</button>
+      <button>Inhalo</button>
+      <button type="button" name="button">Otro Serv</button-->
+   </div>
+
+
+   <div class="colum-3">
+      <!--button >Biote</button>
+      <button>CirExp</button>
+      <button>ClinSue</button>
+      <button>Epoc</button>
+      <button>Pato</button>
+      <button>InvAutoin</button>
+      <button>Infecto</button>
+      <button>Asma</button>
+      <button>C.I.E.N.I</button>
+      <button>Otro Inves</button>
+      <button type="button" name="button">Quirofano Urg.</button-->
+   </div>
+
+   <div class="colum-4">
+     <!--button>Medicos</button>
+     <button>Intendencia</button>
+     <button>RopaNva</button>
+     <button>Dir. Admon.</button>
+     <button>Dir. Gral.</button>
+     <button>Audio Visual</button>
+     <button>Morfologia</button>
+     <button>Rehab. Respiratoria</button>
+     <button>Otra</button>
+     <button>Otra-1</button>
+   </div-->
+ </section>
+
+{% endblock content %}

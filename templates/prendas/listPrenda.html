@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container contenedor">
+	{% if object_list %}
+	<h1 class="text-center">Lista de Prendas</h1>
+	<table class="table table-lg-responsive table-striped">
+		<thead>
+			<th class="center">Prenda</th>
+			<th class="center">Stock</th>
+			<th class="center">Acciones</th>
+		</thead>
+		<tbody>
+			{% for prendas in object_list %}
+			<tr>
+				<td align="center">{{prendas.nombre_prenda}}</td>
+				<td align="center">{{prendas.no_prendas}}</td>
+				<td align="center">
+					<a href="{% url 'prendas:updatePrenda' prendas.id %}"><button class="btn btn-primary btn-sm">Editar</button></a>
+					<a href="{% url 'prendas:deletePrenda' prendas.id %}"><button class="btn btn-danger btn-sm">Eliminar</button></a>
+				</td>
+			</tr>
+			{% endfor %}
+
+		</tbody>
+	</table>
+	<a href="{% url 'prendas:newPrenda' %}" class="btn btn-block btn-primary btn-lg">Registrar Ropa</a>
+	{% else %}
+	<h1 class="text-center">No hay prendas registradas</h1>
+	<a href="{% url 'prendas:newPrenda' %}" class="btn btn-block btn-primary btn-lg">Registrar Ropa</a>
+	{% endif %}
+</div>
+
+{% endblock content %}

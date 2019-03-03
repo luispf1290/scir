@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<div class="container contenedor">
+	{% if object_list %}
+	<h1 class="text-center">Lista de Insumos</h1>
+	<table class="table table-lg-responsive table-striped">
+		<thead class="text-center">
+			<th>Empresa</th>
+			<th>Producto</th>
+			<th>Unidades en almacen</th>
+			<th>Presentacion</th>
+			<th>Total</th>
+			<th>Acciones</th>
+		</thead>
+		<tbody>
+			{% for insumos in object_list %}
+			<tr>
+				<td align="center">{{insumos.empresa}}</td>
+				<td align="center">{{insumos.nombre}}</td>
+				<td align="center">{{insumos.unidades}} unidades</td>
+				<td align="center">{{ insumos.presentacion }}(Lt/Gr)</td>
+				<td align="center">{{ insumos.total }}</td>
+				<td align="center">
+					<a href="{% url 'insumos:updateInsumo' insumos.id%}" class="btn btn-primary btn-sm">Editar</a>
+					<a href="{% url 'insumos:deleteInsumo' insumos.id %}" class="btn btn-sm btn-danger">Eliminar</a>
+					<button href="#ventana" class="btn btn-sm buton-modal btn-info" data-toggle="modal" value="{{ insumos.id }}">Dosis</button>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{% url 'insumos:newInsumo'%}" class="btn btn-block btn-lg btn-primary">Registar Insumo</a>
+	{% else %}
+	<h1 class="text-center">No hay Insumos registrados</h1>
+	<a href="{% url 'insumos:newInsumo'%}" class="btn btn-block btn-lg btn-primary">Registar Insumo</a>
+	{% endif %}
+</div>
+{% endblock content %}
+
+<!-- Ventana modal del objeto insumo -->
+{% block modal-ventana %}
+<div class="modal fade" id="ventana" role="dialog">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content" id="datos">
+			
+
+		</div>
+	</div>
+</div>
+{% endblock modal-ventana %}
+<!-- Ventana modal que muestra la informacion de los insumos-->-

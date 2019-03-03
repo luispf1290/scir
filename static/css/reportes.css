@@ -1,0 +1,26 @@
+.reportes{
+   display: flex;
+   flex-direction: column;
+}
+
+#reportes{
+    margin-top: 25px;
+    margin-bottom: 50px;
+}
+
+.btn-reporte{
+    display: flex;
+    flex-direction: column;
+}
+
+#semestral{
+    display: none;
+}
+
+#trimestral{
+    display: none;
+}
+
+#mensual{
+    display: none;
+}

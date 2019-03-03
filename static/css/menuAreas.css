@@ -1,0 +1,52 @@
+.menus{
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.colum-1, .colum-2, .colum-3, .colum-4{
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px 20px 20px;
+}
+
+.colum-1>button, .colum-2>button{
+  background-color: #3c1fcc;
+  color:white;
+}
+.colum-1>button>a{
+  color: white;
+  text-decoration: none;
+}
+
+.colum-3>button{
+  background-color: #3e9e17;
+  color: white;
+}
+
+.colum-4>button{
+  background-color: rgb(224, 216, 22);
+}
+
+.colum-2>button:nth-child(7), .colum-2>button:nth-child(8){
+  background-color: #9837b0;
+  color: white;
+}
+
+.colum-2>button>a{
+  color: white;
+  text-decoration: none;
+}
+
+.colum-4>button:nth-child(1){
+  background-color: red;
+  color: white;
+}
+
+.colum-1>button, .colum-2>button, .colum-3>button, .colum-4>button{
+  height: 70px;
+  width: 180px;
+  margin-bottom: 15px;
+  border-radius: 0px 30px 0px 30px;
+  -webkit-box-shadow:rgb(150, 150, 150)5px 5px;
+}

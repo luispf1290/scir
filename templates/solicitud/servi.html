@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-3">
+		<h1 class="text-align-center"></h1>
+		<form action="" method="POST">
+			{% csrf_token %}
+			{% bootstrap_form form%}
+			<button type="submit" class="btn btn-primary btn-lg"></button>
+		</form>
+	</div>
+
+</div>
+{% endblock content %}

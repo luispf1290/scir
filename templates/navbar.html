@@ -1,0 +1,63 @@
+<body>
+{% if request.user.is_authenticated %}
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url "menuPrincipal" %}">S.C.I.R.</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {% if request.user.is_superuser %}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url "menuPrincipal" %}">Menu<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "usuario:listUser" %}">Usuarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "prendas:listPrenda" %}">Prendas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "area:listAreas" %}">Areas</a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url "insumos:listInsumo" %}" class="nav-link">Insumos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'solicitud:newSolicitud' %}">Solicitud de servicio</a>
+        </li>
+        {% else %}
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url "menuPrincipal" %}">Menu<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'solicitud:newSolicitud' %}">Solicitud de servicio</a>
+        </li>
+        {% endif %}
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li> -->
+      </ul>
+      <ul class="nav navbar-nav justify-content-end" >
+          {% if request.user.is_authenticated %}
+          <li class="nav-item" >
+            <a href="#" class="nav-link active" >{{ user.username }}</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'auth_logout' %}" class="btn btn-outline-info my-2 my-sm-0 ">Salir</a>
+          </li>
+          {% endif %}
+      </ul>
+    </div>
+  </nav>
+{% endif %}
+

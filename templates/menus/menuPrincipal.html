@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<section class=" container contenedor">
+	<h1 class=" text-center">Menu</h1>
+	{% if request.user.is_superuser %}
+
+	<div class="row mt-3 text-center">
+		<div class="col-4">
+			<a href="{% url 'usuario:listUser' %}">
+				<img class="" src="{% static 'img/menuPrincipal/cliente.png' %}" alt="">
+			</a>
+			<p>Usuarios</p>
+		</div>
+
+		<div class="col-4">
+			<a href="{% url 'insumos:listInsumo' %}">
+				<img src="{% static 'img/menuPrincipal/insumo.png' %}" alt="" width="150" height="150">
+			</a>
+			<p>Insumos</p>
+		</div>
+		<div class="col-4">
+			<a href="{% url 'prendas:listPrenda' %}">
+
+				<img src="{% static 'img/menuPrincipal/prenda.png' %}" alt="" width="150" , height="150">
+
+			</a>
+			<p>Prendas</p>
+		</div>
+	</div>
+
+	<div class="row mt-3 text-center">
+		<div class="col-4">
+			<a href="{% url 'area:listAreas' %}">
+
+				<img src="{% static 'img/menuPrincipal/area.png' %}" alt="" width="150" height="150">
+
+			</a>
+			<p>Areas</p>
+		</div>
+		<div class="col-4">
+			<a href="{% url 'solicitud:newSolicitud' %}">
+
+				<img src="{% static 'img/menuPrincipal/solicitud.png' %}" alt="" width="150" height="150">
+
+			</a>
+			<p>Solicitud</p>
+		</div>
+		<div class="col-4">
+			<a href="{% url 'solicitud:menu_report' %}">
+
+				<img src="{% static 'img/menuPrincipal/reportes.png' %}" alt="" width="150" height="150">
+
+			</a>
+			<p>Reportes</p>
+		</div>
+	</div>
+
+	{% else %}
+	<div class="row">
+		<a href="{% url 'solicitud:newSolicitud' %}">
+			<img src="{% static 'img/menuPrincipal/solicitud.png' %}" alt="">
+		</a>
+	</div>
+	{% endif %}
+</section>
+{% endblock content %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="container contenedor">
+
+  <!-- ********* encabezado de solicitud ******* -->
+  <div class="text-center">
+    <h3>Solicitud de servicio</h3>
+    <p>lavanderia</p>
+  </div>
+
+  <!-- ************* fecha, area y numero de folio ******* -->
+  <form method="POST" accept-charset="utf-8">
+    {% csrf_token %}
+    <div class="encabezado">
+      <div class="form-group row">
+        <div class="col-sm-4">
+          <label for="fecha">Fecha</label>
+          {{ form.fecha }}
+        </div>
+        <div class="col-sm-4">
+          <label for="fk_area">Servicio: </label>
+          {{ form.fk_area }}
+
+        </div>
+        <div class="col-sm-4">
+          <label for="folio">Folio</label>
+          {{ form.folio }}
+
+        </div>
+      </div>
+    </div>
+
+    <!--- ************* llenado de solicitud ropa  ********** -->
+    <div class="row justify-content-center turno-recol ">
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="fk_turno">Turno</label>
+            {{ form.fk_turno }}
+
+          </div>
+          <div class="col-sm-6">
+            <label for="">Recoleccion</label>
+            {{ form.fk_recol }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contenido-serv container">    
+        <div class="row">
+          <div class="ropaje col-sm-4  ">
+            <h6 class="text-center">Ropa</h6>
+            {% for prenda in prenda  %}
+            <div class="row" >
+              <label for="" >{{prenda.nombre_prenda}}</label>
+              <input type="text" name="solicitud_set-{{forloop.counter0}}-fk_prenda" id="id_solicitud_set-{{forloop.counter0}}-fk_prenda" class="" value="{{prenda.id}}" >
+            </div>
+            {% endfor %}
+          </div>
+          <div class="recibe col-sm-4">
+            {{ integral_solicitud_form.management_form}}
+            <div class="row ">
+              <div class="col-sm-6 ">
+                <h6>Recibe lavanderia</h6>
+                {% for items in integral_solicitud_form %}
+                <div class="row ">
+                  <div class="col-sm-4">
+                    {{ items.recibe_lav }}
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" name="button" class="btn btn-primary btn-contador btn-suma{{forloop.counter0}}">+</button>
+                  </div>
+                  <div class="col-sm-4">
+                      <button type="button" name="button" class="btn btn-primary btn-contador btn-resta{{forloop.counter0}}">-</button>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="col-sm-6 ">
+                <h6>Recibe Servicio</h6>
+                {% for items in integral_solicitud_form %}
+                <div class="row">
+                  <div class="col-sm-4">
+                    {{ items.recibe_serv}}
+                  </div>
+                  <div class="col-sm-4">
+                    <button type="button" id="btn-sumar{{forloop.counter0}}" name="button" class="btn btn-primary btn-contador">+</button>
+                  </div>
+                  <div class="col-sm-4">
+                      <button type="button" id="btn-restar{{forloop.counter0}}" name="button" class="btn btn-primary btn-contador">-</button>
+                    </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="totales col-sm-4">
+            <div class="row">
+              <div class="col-sm-6">
+                <h6>Total lavanderia</h6>
+                {% for items in integral_solicitud_form %}
+                {{items.total_lav}}
+                {% endfor %}
+              </div>
+              <div class="col-sm-6">
+                <h6>Total servicio</h6>
+                {% for items in integral_solicitud_form %}
+                {{items.total_serv}}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">Enviar</button>
+  </form>
+
+  <a href="{% url 'solicitud:solicitud_pdf' %}" class="mt-3 btn btn-block btn-lg btn-success" >Generar Reporte Solicitud</a>
+</div>
+
+{% endblock content %}

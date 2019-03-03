@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container contenedor">
+	{% if object_list %}
+	<h1 class="text-center">Lista de Areas</h1>
+	<table class="table table-lg-responsive table-striped">
+		<thead class="text-center">
+			<th>Codigo</th>
+			<th>Area</th>
+			<th>Stock</th>
+			<th>Acciones</th>
+		</thead>
+		<tbody>
+			{% for areas in object_list %}
+			<tr>
+				<td align="center">{{areas.codigo}}</td>
+				<td align="center">{{areas.nombre_area}}</td>
+				<td align="center">{{ areas.stock }}</td>
+				<td align="center">
+					<a href="{% url 'area:updateArea' areas.id %}"><button class="btn btn-primary btn-sm">Editar</button></a>
+					<a href="{% url 'area:deleteArea' areas.id %}"><button class="btn btn-danger btn-sm">Eliminar</button></a>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{% url 'area:newArea' %}" class="btn btn-primary btn-block btn-lg">Registar Area</a>
+
+	{% else %}
+	<h1 class="text-center">No hay areas registradas</h1>
+	<a href="{% url 'area:newArea' %}" class="btn btn-primary btn-block btn-lg">Registar Area</a>
+</div>
+{% endif %}
+{% endblock content %}

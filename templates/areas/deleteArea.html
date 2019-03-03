@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block title %}Eliminar {{ object.no_empleado }}{% endblock %}
+{% block content %}
+	<div class="row">
+		<h1 class="text-align-center">¿Estás seguro que deseas borrar el Usuario "{{ object.codigo}}"?</h1>
+		<p class="text-align-center">{{object.nombre_area}}</p>
+		<div class="col-sm-6 col-sm-offset-3">
+			<form method="POST">{% csrf_token %}
+		    	<input class="btn btn-danger btn-lg" type="submit" value="Eliminar" />
+		    	<br/>
+			</form>
+			
+			<a href="{% url "area:listAreas" %}"><button class="btn btn-primary btn-lg">Cancelar</button></a>
+		</div>
+	</div>
+{% endblock %}

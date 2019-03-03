@@ -1,0 +1,71 @@
+.encabezado {
+  border: 2px black solid;
+  padding: 30px;
+  margin: auto;
+}
+
+.turno-recol {
+  margin: 20px auto;
+  padding: 15px;
+}
+
+
+
+.ropaje {
+  color: black;
+  background: rgba(46, 42, 42, 0.205);
+  padding: 20px;
+}
+
+.ropaje div {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-bottom: 1px black solid;
+  margin-top: 17px;
+}
+
+.ropaje div input {
+  display: none;
+}
+.recibe {
+  background: yellow;
+  color: black;
+  padding: 20px;
+}
+
+.row-recibe {
+  border-bottom: 2px black solid;
+}
+
+.recibe input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  display: inline-block;
+}
+
+.recibe button {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.totales {
+  background: blue;
+  color: black;
+  padding: 20px;
+}
+
+.totales input {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.totales .row div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

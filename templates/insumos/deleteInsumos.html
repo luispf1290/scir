@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+
+{% block title %}Eliminar{% endblock title %}
+
+{% block content %}
+	<div class="row">
+		<h1 class="text-align-center">¿Estas seguro de eliminar el producto "{{object.codigo}}"</h1>
+		<p class="text-align-center">{{object.nombre}}</p>
+		<div class="col-sm-6-col-sm-offset-3">
+			<form method="POST">
+				{% csrf_token %}
+				<input class="btn btn-danger btn-lg" type="submit" value=Aceptar>
+			</form>
+			<br>
+			<a href="{% url 'insumos:listInsumo' %}"><button class="btn btn-primary btn-lg">cancelar</button></a>
+		</div>
+
+	</div>
+{% endblock content %}
