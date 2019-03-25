@@ -27,6 +27,8 @@ from solicitud.forms import SolicitudForm, IntegralForm, Integral_Solicitud_Form
 import time
 from datetime import datetime
 
+from django.db.models.functions import Lower
+
 def menu_report(request):
     return render(request, 'menus/menuReporte.html')
 
@@ -224,35 +226,34 @@ class ReporteSolicitud(View):
 
 
     def tablalav(self, c, y):
-        solicitud = Solicitud.objects.filter(fk_integral__folio='34089',fk_integral__fk_turno='2', fk_integral__fk_recol='1').values('fk_prenda__nombre_prenda','recibe_serv','recibe_lav')
+        solicitud_1 = Solicitud.objects.filter(fk_integral__folio='34089',fk_integral__fk_turno='2', fk_integral__fk_recol='1').values('fk_prenda__nombre_prenda','recibe_serv','recibe_lav')
         
-         #table header
+        #table header
         styles = getSampleStyleSheet()
         styleBH = styles["Normal"]
         styleBH.fontSize = 3
 
         lav_ropa = Paragraph('', styleBH)
-        recibe_lav_recol1 = Paragraph('recibe lav', styleBH)
-        recibe_serv_recol1 = Paragraph('recibe serv' , styleBH)
-        recibe_lav_recol2 = Paragraph('recibe lav', styleBH)
-        recibe_serv_recol2 = Paragraph('recibe serv', styleBH)
+        recibe_lav_recol = Paragraph('recibe lav', styleBH)
+        recibe_serv_recol = Paragraph('recibe serv' , styleBH)
 
         data = []
-        data.append([lav_ropa, recibe_lav_recol1, recibe_serv_recol1])
+        data.append([lav_ropa, recibe_lav_recol, recibe_serv_recol])
+        
          #Table
         width, heigth = A4
         high = 600
 
-        for sol in solicitud:
-            this_sol = [sol['fk_prenda__nombre_prenda'], sol['recibe_lav'], sol['recibe_serv']]
+        for sol in solicitud_1:
+            this_sol = [sol['fk_prenda__nombre_prenda'], 
+                        sol['recibe_lav'], 
+                        sol['recibe_serv']]
             data.append(this_sol)
             high = high - 18
-        print(data)
+
          #Table size
         width, heigth = A4
-        table = Table(data, colWidths=[2.2 * cm, 1 * cm, 1* cm, 1* cm, 1* cm,
-                                        2.2* cm, 1 * cm, 1* cm, 1* cm, 1* cm,
-                                        2.2*cm, 1 * cm, 1* cm, 1* cm, 1* cm])
+        table = Table(data, colWidths=[2.2 * cm, 1 * cm, 1* cm])
         table.setStyle(TableStyle([
              ('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
              ('BOX', (0,0), (-1, -1), 0.25, colors.black ),
@@ -261,7 +262,186 @@ class ReporteSolicitud(View):
          #pdf size
         table.wrapOn(c, width, heigth)
         table.drawOn(c, 36, high)
+    
+    def tabla2(self, c, y):
+        solicitud_2 = Solicitud.objects.filter(fk_integral__folio='34089',fk_integral__fk_turno='2', fk_integral__fk_recol='2').values('recibe_serv','recibe_lav')
+        #table header
+        styles = getSampleStyleSheet()
+        styleBH = styles["Normal"]
+        styleBH.fontSize = 3
+        recibe_lav_recol = Paragraph('recibe lav', styleBH)
+        recibe_serv_recol = Paragraph('recibe serv' , styleBH)
 
+        data = []
+        data.append([recibe_lav_recol, recibe_serv_recol])
+
+        width, heigth = A4
+        high = 600
+
+        for sol in solicitud_2:
+            this_sol = [sol['recibe_lav'], 
+                        sol['recibe_serv']]
+            data.append(this_sol)
+            high = high - 18
+        
+
+         #Table size
+        width, heigth = A4
+        table = Table(data, colWidths=[1 * cm, 1* cm])
+        table.setStyle(TableStyle([
+             ('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
+             ('BOX', (0,0), (-1, -1), 0.25, colors.black ),
+             ('FONTSIZE', (0, 0), (-1, -1), 8)]))
+
+         #pdf size
+        table.wrapOn(c, width, heigth)
+        table.drawOn(c, 155, high)
+
+    def tabla3(self, c, y):
+        solicitud_1 = Solicitud.objects.filter(fk_integral__folio='34089',fk_integral__fk_turno='2', fk_integral__fk_recol='1').values('fk_prenda__nombre_prenda','recibe_serv','recibe_lav')
+        
+        #table header
+        styles = getSampleStyleSheet()
+        styleBH = styles["Normal"]
+        styleBH.fontSize = 3
+
+        lav_ropa = Paragraph('', styleBH)
+        recibe_lav_recol = Paragraph('recibe lav', styleBH)
+        recibe_serv_recol = Paragraph('recibe serv' , styleBH)
+
+        data = []
+        data.append([lav_ropa, recibe_lav_recol, recibe_serv_recol])
+        
+         #Table
+        width, heigth = A4
+        high = 600
+
+        for sol in solicitud_1:
+            this_sol = [sol['fk_prenda__nombre_prenda'], 
+                        sol['recibe_lav'], 
+                        sol['recibe_serv']]
+            data.append(this_sol)
+            high = high - 18
+
+         #Table size
+        width, heigth = A4
+        table = Table(data, colWidths=[2.2 * cm, 1 * cm, 1* cm])
+        table.setStyle(TableStyle([
+             ('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
+             ('BOX', (0,0), (-1, -1), 0.25, colors.black ),
+             ('FONTSIZE', (0, 0), (-1, -1), 8)]))
+
+         #pdf size
+        table.wrapOn(c, width, heigth)
+        table.drawOn(c, 212, high)
+    
+    def tabla4(self, c, y):
+        solicitud_2 = Solicitud.objects.filter(fk_integral__folio='34089',fk_integral__fk_turno='2', fk_integral__fk_recol='2').values('recibe_serv','recibe_lav')
+        #table header
+        styles = getSampleStyleSheet()
+        styleBH = styles["Normal"]
+        styleBH.fontSize = 3
+        recibe_lav_recol = Paragraph('recibe lav', styleBH)
+        recibe_serv_recol = Paragraph('recibe serv' , styleBH)
+
+        data = []
+        data.append([recibe_lav_recol, recibe_serv_recol])
+
+        width, heigth = A4
+        high = 600
+
+        for sol in solicitud_2:
+            this_sol = [sol['recibe_lav'], 
+                        sol['recibe_serv']]
+            data.append(this_sol)
+            high = high - 18
+        
+
+         #Table size
+        width, heigth = A4
+        table = Table(data, colWidths=[1 * cm, 1* cm])
+        table.setStyle(TableStyle([
+             ('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
+             ('BOX', (0,0), (-1, -1), 0.25, colors.black ),
+             ('FONTSIZE', (0, 0), (-1, -1), 8)]))
+
+         #pdf size
+        table.wrapOn(c, width, heigth)
+        table.drawOn(c, 331, high)
+    
+    
+    def tabla5(self, c, y):
+        solicitud_1 = Solicitud.objects.filter(fk_integral__folio='34089',fk_integral__fk_turno='2', fk_integral__fk_recol='1').values('fk_prenda__nombre_prenda','recibe_serv','recibe_lav')
+        
+        #table header
+        styles = getSampleStyleSheet()
+        styleBH = styles["Normal"]
+        styleBH.fontSize = 3
+
+        lav_ropa = Paragraph('', styleBH)
+        recibe_lav_recol = Paragraph('recibe lav', styleBH)
+        recibe_serv_recol = Paragraph('recibe serv' , styleBH)
+
+        data = []
+        data.append([lav_ropa, recibe_lav_recol, recibe_serv_recol])
+        
+         #Table
+        width, heigth = A4
+        high = 600
+
+        for sol in solicitud_1:
+            this_sol = [sol['fk_prenda__nombre_prenda'], 
+                        sol['recibe_lav'], 
+                        sol['recibe_serv']]
+            data.append(this_sol)
+            high = high - 18
+
+         #Table size
+        width, heigth = A4
+        table = Table(data, colWidths=[2.2 * cm, 1 * cm, 1* cm])
+        table.setStyle(TableStyle([
+             ('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
+             ('BOX', (0,0), (-1, -1), 0.25, colors.black ),
+             ('FONTSIZE', (0, 0), (-1, -1), 8)]))
+
+         #pdf size
+        table.wrapOn(c, width, heigth)
+        table.drawOn(c, 388, high)
+    
+    def tabla6(self, c, y):
+        solicitud_2 = Solicitud.objects.filter(fk_integral__folio='34089',fk_integral__fk_turno='2', fk_integral__fk_recol='2').values('recibe_serv','recibe_lav')
+        #table header
+        styles = getSampleStyleSheet()
+        styleBH = styles["Normal"]
+        styleBH.fontSize = 3
+        recibe_lav_recol = Paragraph('recibe lav', styleBH)
+        recibe_serv_recol = Paragraph('recibe serv' , styleBH)
+
+        data = []
+        data.append([recibe_lav_recol, recibe_serv_recol])
+
+        width, heigth = A4
+        high = 600
+
+        for sol in solicitud_2:
+            this_sol = [sol['recibe_lav'], 
+                        sol['recibe_serv']]
+            data.append(this_sol)
+            high = high - 18
+        
+
+         #Table size
+        width, heigth = A4
+        table = Table(data, colWidths=[1 * cm, 1* cm])
+        table.setStyle(TableStyle([
+             ('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
+             ('BOX', (0,0), (-1, -1), 0.25, colors.black ),
+             ('FONTSIZE', (0, 0), (-1, -1), 8)]))
+
+         #pdf size
+        table.wrapOn(c, width, heigth)
+        table.drawOn(c, 507, high)
+    
 
     def get(self, request, *args, **kwargs):
 
@@ -281,6 +461,11 @@ class ReporteSolicitud(View):
         self.recoleccion(c)
         y=600
         self.tablalav(c, y)
+        self.tabla2(c, y)
+        self.tabla3(c, y)
+        self.tabla4(c,y)
+        self.tabla5(c, y)
+        self.tabla6(c, y)
         c.showPage()
         c.save()
         pdf = buffer.getvalue()
