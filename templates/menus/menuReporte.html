@@ -2,42 +2,26 @@
 {% load staticfiles %}
 
 {% block content %}
-	<section class="reportes" name="reportes" >
-     <h2 class="text-center">Menu de reportes</h2>
-     <div id="reportes">
-         <select name="reportes" class="form-control" id="report" onchange="mostrar(this.value)">
-             <option value="1">Anual</option>
-             <option value="2">Semestral</option>
-             <option value="3">Trimestral</option>
-             <option value="4">Mensual</option>   
-         </select>
-     </div>
-   <div class="btn-reporte" id="anual">
-      <button class = "btn btn-primary btn-lg" id="anual">Anual</button>
-   </div>
-   <div id="semestral" class="btn-reporte">
-       <button class="btn btn-primary btn-lg">Primer semestre</button>
-      <button class="btn btn-primary btn-lg">segundo semestre</button>
-   </div>
-   <div id="trimestral" class="btn-reporte">
-       <button class="btn btn-primary btn-lg">Primer trimestre</button>
-      <button class="btn btn-primary btn-lg">segundo trimestre</button>
-      <button class="btn btn-primary btn-lg">tercer trimestre</button>
-      <button class="btn btn-primary btn-lg">cuarto trimestre</button>
-   </div>
-   <div id="mensual" class="btn-reporte">
-       <a href="{% url 'solicitud:reporte' %}"><button class="btn btn-primary btn-lg">Enero</button></a>
-      <button class="btn btn-primary btn-lg">Febrero</button>
-      <button class="btn btn-primary btn-lg">Marzo</button>
-      <button class="btn btn-primary btn-lg">Abril</button>
-        <button class="btn btn-primary btn-lg">Mayo</button>
-      <button class="btn btn-primary btn-lg">Junio</button>
-      <button class="btn btn-primary btn-lg">Julio</button>
-      <button class="btn btn-primary btn-lg">Agosto</button>
-        <button class="btn btn-primary btn-lg">Septiembre</button>
-      <button class="btn btn-primary btn-lg">Octubre</button>
-      <button class="btn btn-primary btn-lg">Noviembre</button>
-      <button class="btn btn-primary btn-lg">Diciembre</button>
-   </div>
- </section>
+<div class=" container mt-5" name="reportes">
+  <h3>Reportes</h3>
+  <form action="" method="get" name="form">
+    <div class="form-group">
+      <label for=""></label>
+      <select class="custom-select" name="options" id="options">
+        <option selected>Select one</option>
+        <option value="1">anual</option>
+        <option value="2">semestral</option>
+        <option value="3">trimestral</option>
+        <option value="4">bimestral</option>
+        <option value="5">mensual</option>
+      </select>
+
+      <select class="custom-select" name="anual" id="anual" disabled="disabled">
+
+      </select>
+    </div>
+  </form>
+</div>
+
+
 {% endblock content %}

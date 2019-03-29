@@ -54,6 +54,39 @@
 
 <script src="{% static 'js/ajax.js' %}"></script>
 <script src="{% static "js/ajaxSol.js" %}" type="text/javascript" charset="utf-8" async defer></script>
+<script>
+  
+
+  function recorrer(array, propiedad){
+
+    array.map(
+      propiedad ? elemento => recorrer(elemento[propiedad])
+      : elemento => document.write("<div>"+elemento+"</div>")
+    );
+  }
+
+   var opciones = []
+    opciones.push({
+      anual : ['2019','2018','2017','2016','2015','2014'],
+      semestral : ['primer semestre', 'Segundo semestre'],
+      trimestral : ['Primer trimestre', 'Segundo trimestre','Tercer trimestre','Cuarto trimestre'],
+      bimestral : ['Primer bimestre', 'Segundo bimestre','Tercer bimestre','Cuarto bimestre','Quinto bimestre','Sexto bimestre'],
+      mensual : ['Enero', 'Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    });
+  
+  $('#options').change(function(){
+
+    var str = "";
+    /**$( "select option:selected" ).each(function() {
+      str += $( this ).val() + " ";
+    });**/
+ 
+    str = $( "select option:selected" ).text();
+    recorrer(opciones, str);
+    
+  });
+
+</script>
 
 </body>
 

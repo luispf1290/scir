@@ -16,16 +16,14 @@ Including another URLconf
 
 from django.conf.urls import url
 from solicitud import views
-from solicitud.views import RegistroCreateView, ReporteSolicitud
+from solicitud.views import RegistroCreateView, ReporteSolicitud, Reporte
 from django.contrib.auth.decorators import login_required
 
 urlpatterns =[
 	
     url(r"^servicio/", login_required(RegistroCreateView.as_view()), name="newSolicitud"),
-	# url(r'^excelfile/', login_required(ExcelExport.as_view()), name='excelfile'),
-	# url(r'^reporte/',login_required(Reporte.as_view()) , name='reporte'),
+	url(r'^reporte/',login_required(Reporte.as_view()) , name='reporte'),
 	url(r'^menu-report/', login_required(views.menu_report), name='menu_report'),
-    # url(r'^ajax/solicitud/', login_required(views.SolAjax), name='solajax'),
-	url(r'^solicitud-pdf/$', ReporteSolicitud.as_view(), name='solicitud_pdf')
+	url(r'^solicitud-pdf/$', login_required(ReporteSolicitud.as_view()) , name='solicitud_pdf')
 	
 ]
