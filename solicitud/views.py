@@ -533,7 +533,6 @@ class Reporte(View):
         width, heigth = A4
         high = 680
 
-        print(reportes[0]['fk_prenda__nombre_prenda'])
         i = 0
         while (i < 25):
             data.append([reportes[i]['fk_prenda__nombre_prenda'], reportes[i]['total_ropa']] )
