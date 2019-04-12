@@ -4,22 +4,30 @@
 {% block content %}
 <div class=" container mt-5" name="reportes">
   <h3>Reportes</h3>
-  <form action="" method="get" name="form">
+  <form action="{% url 'solicitud:reporte' %}" method="get">
+  {% csrf_token %}
     <div class="form-group">
       <label for=""></label>
-      <select class="custom-select" name="options" id="options">
+      <select class="custom-select" name="anual" id="anio">
+          <option value="0">-seleciona un año-</option>
+          <option value="2019">2019</option>
+          <option value="2018">2018</option>
+          <option value="2017">2017</option>
+          <option value="2016">2016</option>
+          <option value="2015">2015</option>
+          <option value="2014">2014</option>
+      </select>
+
+      <select class="custom-select" name="options" id="options" disabled="disabled">
         <option selected>Select one</option>
-        <option value="1">anual</option>
-        <option value="2">semestral</option>
-        <option value="3">trimestral</option>
-        <option value="4">bimestral</option>
-        <option value="5">mensual</option>
+        <option value="1">semestral</option>
+        <option value="2">trimestral</option>
+        <option value="3">bimestral</option>
+        <option value="4">mensual</option>
       </select>
-
-      <select class="custom-select" name="anual" id="anual" disabled="disabled">
-
-      </select>
+      <select class="custom-select" name="option" id="option" disabled="disabled"></select>
     </div>
+    <button type="submit" class="btn btn-success">Generar reporte</button>
   </form>
 </div>
 

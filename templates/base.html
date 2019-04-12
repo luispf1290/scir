@@ -61,28 +61,35 @@
 
     array.map(
       propiedad ? elemento => recorrer(elemento[propiedad])
-      : elemento => document.write("<div>"+elemento+"</div>")
+      : elemento => $('#option').append('<option value="'+elemento[0]+'">'+elemento+'</option>')
     );
   }
 
+   $('#anio').change(function(){
+      if($('#anio').val() !== 0){
+        $('#options').prop('disabled', false);
+        $('#option').prop('disabled', false);
+      }else{
+        $('#options').prop('disabled', 'disabled');
+        $('#option').prop('disabled', 'disabled');
+      }
+    });
+
    var opciones = []
     opciones.push({
-      anual : ['2019','2018','2017','2016','2015','2014'],
       semestral : ['primer semestre', 'Segundo semestre'],
       trimestral : ['Primer trimestre', 'Segundo trimestre','Tercer trimestre','Cuarto trimestre'],
       bimestral : ['Primer bimestre', 'Segundo bimestre','Tercer bimestre','Cuarto bimestre','Quinto bimestre','Sexto bimestre'],
       mensual : ['Enero', 'Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
     });
+
+    var select = document.getElementById('options');
   
   $('#options').change(function(){
 
-    var str = "";
-    /**$( "select option:selected" ).each(function() {
-      str += $( this ).val() + " ";
-    });**/
- 
-    str = $( "select option:selected" ).text();
-    recorrer(opciones, str);
+    var str = this.options[select.selectedIndex];
+    document.getElementById("option").length=0;
+    recorrer(opciones, str.text);
     
   });
 
