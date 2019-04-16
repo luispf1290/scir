@@ -504,21 +504,29 @@ class Reporte(View):
         canvas.drawString(180, 710, 'Periodo que reporta')
 
     def table(self, canvas, y):
+        
         reportes = []
+
+        peso = [0.80, 0.70, 0.15, 0.35, 0.35, 0.45, 1.50, 0.65, 0.45, 0.25,
+                0.10, 0.25, 0.15, 0.05, 0.30, 0.15, 0.35, 0.35, 1.10, 0.75,
+                0.75, 0.20, 0.10, 0.40, 1.00]
+        
+        resultado = []
+
         prendas = Prendas.objects.values('nombre_prenda')
 
-        # connection = connections['connection_in_settings']
-        # cursor = connection.cursor()
-        # sql = """ select p.nombre_prenda, sum(s.total_lav) as total_ropa from solicitud_solicitud as s INNER JOIN prendas_prendas as p ON s.fk_prenda_id=p.id group by p.nombre_prenda, p.id order by p.id; """
-        # cursor.execute(sql)
-        # des = cursor.description
-        # the_data_list=[]
+        
 
         for prenda in prendas:
             report = Solicitud.objects.filter(fk_integral__fecha__year=2019, fk_prenda__nombre_prenda=prenda['nombre_prenda']).values('fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
             
             reportes.append(report)
-             
+
+        j = 0
+        while(j < 25):
+            resultado.append(reportes[j]['total_ropa'] * peso[j])
+            j+=1
+
          #table header
         styles = getSampleStyleSheet()
         styleBH = styles["Normal"]
@@ -533,9 +541,9 @@ class Reporte(View):
         width, heigth = A4
         high = 680
 
-        i = 0
+        i=0
         while (i < 25):
-            data.append([reportes[i]['fk_prenda__nombre_prenda'], reportes[i]['total_ropa']] )
+            data.append([reportes[i]['fk_prenda__nombre_prenda'], reportes[i]['total_ropa'], resultado[i]])
             high = high - 18
             i+=1
 
@@ -551,6 +559,75 @@ class Reporte(View):
         table.wrapOn(canvas, width, heigth)
         table.drawOn(canvas, 36, high)
 
+    def totales(self, canvas):
+        cx = 320
+        cy = 190
+        ancho = 113
+        alto = 20
+
+        canvas.setFillColor(white)
+        canvas.rect(cx, cy, ancho, alto, fill=1)
+        canvas.setFillColor(black)
+        canvas.setFont('Helvetica', 12)
+        canvas.drawString(cx+60, cy+5, "0")
+
+        canvas.setFillColor(white)
+        canvas.rect(cx+113, cy, ancho, alto, fill=1)
+        canvas.setFillColor(black)
+        canvas.setFont('Helvetica', 12)
+        canvas.drawString(cx+(ancho+55), cy+5.5, "0")
+
+        ## Pie de pagina
+        canvas.setFont('Helvetica', 11)
+        canvas.drawString(36, 175,'OBSERVASIONES:')
+        canvas.setFont('Helvetica', 10)
+        canvas.drawString(36, 155,'En el periodo de ')
+        canvas.drawString(125, 155, 'MARZO')
+        canvas.drawString(180,155, 'se procesaron')
+        canvas.drawString(255, 155,'0')
+        canvas.drawString(280,155,'pezas de ropa que hace')
+        canvas.drawString(389, 155, 'un total de:')
+        canvas.drawString(450, 155, '0')
+        canvas.drawString(470, 155, 'kilos;')
+        canvas.drawString(36,145, 'para que fuera posible el lavado de ropa, fue necesario el consumo'+ 
+            ' de los siguientes productos especiales de limpieza:')
+        
+        ### Tabla de productos
+
+        articulos= ('REMOVEDOR DE SANGRE', 'AFLOJADOR', 'JABON', 'BLANQUEADOR', 'NEUTRALIZANTE-SUAVIZANTE')
+        list_art = []
+
+        for x in range(len(articulos)):
+            dic_art = {'articulo' : articulos[x]}
+
+            list_art.append(dic_art)
+
+        styles = getSampleStyleSheet()
+        styleBH = styles["Normal"]
+        styleBH.fontSize = 11
+        articulo = Paragraph('DESCRIPCION DEL ARTICULO', styleBH)
+        total = Paragraph('TOTAL (Lt, Kg)', styleBH)
+
+        data = [[articulo, total]]
+        width, heigth = A4
+        high = 100
+
+        for content in list_art:
+            this_content = [content['articulo'],]
+            data.append(this_content)
+            high = high - 18
+
+
+        table = Table(data, colWidths=[6.5*cm, 3.5*cm])
+        table.setStyle(TableStyle([
+            ('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
+            ('BOX', (0,0), (-1, -1), 0.25, colors.black ),
+            ('FONTSIZE', (0, 0), (-1, -1), 8)]))
+        
+        #pdf size
+        table.wrapOn(canvas, width, heigth)
+        table.drawOn(canvas, 170, high+17)
+
     def get(self, request, *args, **kwargs):
         
         a = request.GET['anual']
@@ -564,6 +641,7 @@ class Reporte(View):
         if(len(a) !=0 ):
             self.headerPdf(c)
             self.table(c,y)
+            self.totales(c)
             
         
         c.showPage()
@@ -573,126 +651,10 @@ class Reporte(View):
         response.write(pdf)
 
         return response
+
     
-    # def table(self, pdf, y):
-    #     prendas =('SABANA','COLCHA', 'FUNDA P/ ALMOHADA ', 'PANTALON PIJAMA ADULTO','CAMISA PIJAMA ADULTO',
-    #                 'CAMISON', 'COBERTOR', 'BATA DE MANGA LARGA', 'COMPRESA DOBLE DE 120x120 CMS.', 'COMPRESA DOBLE DE 80X80 CMS.', 'COMPRESA DOBLE DE 40X40 CMS.',
-    #                 'COMPRESA SENCILLA DE 120X120 CMS.', 'COMPRESA SENCILLA DE 80X80 CMS.', 'COMPRESA SENCILLA DE 40X40 CMS.', 'FUNDA P/ MESA DE MAYO', 'COMPRESA PARA RAQUEA', 'SACO PARA CIRUJANO', 'PANTALON PARA CIRUJANO',
-    #                 'SABANA HENDIDA', 'SABAN DE RIÑON', 'SABANA DE PIE', 'BOTA DE LONA', 'TOALLA PARA MANOS', 'PIJAMA INFANTIL', 'MANTEL')
-        
-    #     list_cont =[]
-    #     for x in range(len(prendas)):
-    #         dic_cont = {'prenda' : prendas[x]}
-
-    #         list_cont.append(dic_cont)
+    
 
 
-    #     styles = getSampleStyleSheet()
-    #     styleBH = styles["Normal"]
-    #     styleBH.fontSize = 11
-    #     articulo = Paragraph('ARTICULO', styleBH)
-    #     piezas = Paragraph('PIEZAS', styleBH)
-    #     kilos = Paragraph('KILOS' , styleBH)
 
-    #     data = [[articulo, piezas, kilos]]
-    #     width, heigth = A4
-    #     high = 650
-
-    #     for content in list_cont:
-    #         this_content = [content['prenda'],]
-    #         data.append(this_content)
-    #         high = high - 18
-
-
-    #     table = Table(data, colWidths=[10*cm, 4*cm, 4*cm])
-
-    #     table.setStyle(TableStyle([
-    #         ('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
-    #         ('BOX', (0,0), (-1, -1), 0.25, colors.black ),
-    #         ('FONTSIZE', (0, 0), (-1, -1), 8)]))
-        
-    #     #pdf size
-    #     table.wrapOn(pdf, width, heigth)
-    #     table.drawOn(pdf, 36, high)
-
-    # def pie(self, pdf):
-    #     cx = 320
-    #     cy = 170
-    #     ancho = 113
-    #     alto = 20
-
-    #     pdf.setFillColor(white)
-    #     pdf.rect(cx, cy, ancho, alto, fill=1)
-    #     pdf.setFillColor(black)
-    #     pdf.setFont('Helvetica', 12)
-    #     pdf.drawString(cx+60, cy+5.5, "0")
-
-    #     pdf.setFillColor(white)
-    #     pdf.rect(cx+ancho, cy, ancho, alto, fill=1)
-    #     pdf.setFillColor(black)
-    #     pdf.setFont('Helvetica', 12)
-    #     pdf.drawString(cx+(ancho+55), cy+5.5, "0")
-
-    #     pdf.setFont('Helvetica', 11)
-    #     pdf.drawString(36, 150, 'OBSERVACIONES:')
-    #     pdf.setFont('Helvetica', 10)
-    #     pdf.drawString(36, 135,'En el periodo de ')
-    #     pdf.drawString(125, 135, 'MARZO')
-    #     pdf.drawString(180,135, 'se procesaron')
-    #     pdf.drawString(255, 135,'0')
-    #     pdf.drawString(280,135,'pezas de ropa que hace')
-    #     pdf.drawString(389, 135, 'un total de:')
-    #     pdf.drawString(450, 135, '0')
-    #     pdf.drawString(470, 135, 'kilos;')
-    #     pdf.drawString(36,125, 'para que fuera posible el lavado de ropa, fue necesario el consumo'+ 
-    #         'de los siguientes productos especiales de limpieza:')
-
-    #     articulos= ('REMOVEDOR DE SANGRE', 'AFLOJADOR', 'JABON', 'BLANQUEADOR', 'NEUTRALIZANTE-SUAVIZANTE')
-    #     list_art = []
-
-    #     for x in range(len(articulos)):
-    #         dic_art = {'articulo' : articulos[x]}
-
-    #         list_art.append(dic_art)
-
-    #     styles = getSampleStyleSheet()
-    #     styleBH = styles["Normal"]
-    #     styleBH.fontSize = 11
-    #     articulo = Paragraph('DESCRIPCION DEL ARTICULO', styleBH)
-    #     total = Paragraph('TOTAL (Lt, Kg)', styleBH)
-
-    #     data = [[articulo, total]]
-    #     width, heigth = A4
-    #     high = 100
-
-    #     for content in list_art:
-    #         this_content = [content['articulo'],]
-    #         data.append(this_content)
-    #         high = high - 18
-
-
-    #     table = Table(data, colWidths=[6.5*cm, 3.5*cm])
-    #     table.setStyle(TableStyle([
-    #         ('INNERGRID', (0,0), (-1, -1), 0.25, colors.black),
-    #         ('BOX', (0,0), (-1, -1), 0.25, colors.black ),
-    #         ('FONTSIZE', (0, 0), (-1, -1), 8)]))
-        
-    #     #pdf size
-    #     table.wrapOn(pdf, width, heigth)
-    #     table.drawOn(pdf, 170, high)
-
-
-    # def get(self, request, *args, **kwargs):
-    #     response = HttpResponse(content_type='application/pdf')
-    #     buffer = BytesIO()
-    #     pdf = canvas.Canvas(buffer, pagesize = A4)
-    #     self.encabezado(pdf)
-    #     y = 600
-    #     self.table(pdf, y)
-    #     self.pie(pdf)
-    #     pdf.showPage()
-    #     pdf.save()
-    #     buf = buffer.getvalue()
-    #     buffer.close()
-    #     response.write(buf)
-    #     return response
+    
