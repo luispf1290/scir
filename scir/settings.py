@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'prendas',
     'area',
     'solicitud',
+    'manto',
 ]
 
 
