@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{% static "css/menuAreas.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/servicios.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "css/reportes.css" %}">
+    <link rel='stylesheet' type="text/css" href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css'>
   </head>
   <body>
 <!-- NAVBAR
@@ -54,6 +55,7 @@
 
 <script src="{% static 'js/ajax.js' %}"></script>
 <script src="{% static "js/ajaxSol.js" %}" type="text/javascript" charset="utf-8" async defer></script>
+<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
 <script>
   
 
@@ -93,6 +95,16 @@
     document.getElementById("option").length=0;
     recorrer(opciones, str.text);
     
+  });
+
+</script>
+
+<script>
+  $(function(){
+    $('#id_fecha').datepicker({
+      dateFormat: "yy-mm-dd",
+    });
+
   });
 
 </script>

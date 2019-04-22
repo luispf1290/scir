@@ -2,5 +2,45 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse_lazy
 
-# Create your views here.
+from django.views.generic.edit import (
+		CreateView,
+		UpdateView,
+		DeleteView,
+	)
+from django.views.generic import ListView
+
+from manto.models import Mantenimiento
+from manto.forms import MantenimientoForm
+
+# Create your views here
+
+class MantenimientoCreateView(CreateView):
+    model = Mantenimiento
+    template_name = "manto/mantoNew.html"
+    form_class = MantenimientoForm
+    success_url = reverse_lazy("manto:listManto")
+
+    def get_context_data(self, **kwargs):
+        context = super(MantenimientoCreateView, self).get_context_data(**kwargs)
+        if 'formManto' not in context:
+            context["formManto"] = self.form_class(self.request.GET) 
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object
+        formManto = self.form_class(request.POST)
+        if formManto.is_valid():
+            manto = formManto.save()
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return self.render_to_response(self.get_context_data(form=formManto))
+
+class MantenimientoListView(ListView):
+    model = Mantenimiento
+    template_name = "manto/mantoList.html"
+
+    
+

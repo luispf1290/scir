@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^prendas/', include('prendas.urls', namespace = 'prendas')),
     url(r'^insumos/', include('insumos.urls', namespace = 'insumos')),
     url(r'^solicitud/', include('solicitud.urls', namespace='solicitud')),
+    url(r'^mantenimiento', include('manto.urls', namespace='manto')),
     url(r'^accounts/', include('registration.backends.default.urls')),
 ]

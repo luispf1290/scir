@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container contenedor">
+    {% if object_list %}
+    <h1 class="text-center">Lista de mantenimientos</h1>
+    <table class="table table-lg-responsive table-striped">
+        <thead>
+            <th>Fecha</th>
+            <th>Descripcion</th>
+            <th>Realizado</th>
+        </thead>
+        <tbody>
+            {% for manto in object_list  %}
+            <tr>
+                <td>{{ manto.fecha }}</td>
+                <td>{{ manto.descripcion }}</td>
+                <td>{{ manto.aplicado }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <h1 class="text-center">No hay mantenimientos registrados</h1>
+    {% endif %}
+</div>
+{% endblock content %}

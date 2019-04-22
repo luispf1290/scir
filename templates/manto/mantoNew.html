@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div class='container contenedor'>
+    <h1 class="text-center">Nuevo Insumo</h1>
+		<div class="row justify-content-center">
+			<div class="col-sm-6">
+				<form method="POST">
+					{% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_fecha">Fecha del servicio</label>
+                        <div class='input-group' id='datepicker' data-provide='datepicker'>
+                            {{form.fecha}}
+                            <div class="input-group-append">
+                                <div class='input-group-text'><i class='fa-calendar'></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label for="descripcion">Descripcion del servicio</label>
+                        {{ form.descripcion }}
+                    </div>
+					<button type="submit" class="btn btn-primary btn-block btn-lg">Agregar</button>
+				</form>
+			</div>
+        </div>
+</div>
+{% endblock content %}
