@@ -37,24 +37,3 @@ for (let i = 0; i < 26; i++) {
 	});
 }
 
-window.addEventListener('load', fechaActual, false);
-
-function fechaActual() {
-	// body...
-	var hoy = new Date();
-	var dd = hoy.getDate();
-	var mm = hoy.getMonth() + 1; //hoy es 0!
-	var yyyy = hoy.getFullYear();
-
-	if (dd < 10) {
-		dd = '0' + dd;
-	}
-
-	if (mm < 10) {
-		mm = '0' + mm;
-	}
-
-	hoy = yyyy + '-' + mm + '-' + dd;
-
-	document.getElementById("id_fecha").value = hoy;
-}

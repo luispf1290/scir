@@ -6,6 +6,7 @@
     <h1 class="text-center">Lista de mantenimientos</h1>
     <table class="table table-lg-responsive table-striped">
         <thead>
+            <th>ID</th>
             <th>Fecha</th>
             <th>Descripcion</th>
             <th>Realizado</th>
@@ -13,9 +14,20 @@
         <tbody>
             {% for manto in object_list  %}
             <tr>
+                <td>{{ manto.id }}</td>
                 <td>{{ manto.fecha }}</td>
                 <td>{{ manto.descripcion }}</td>
-                <td>{{ manto.aplicado }}</td>
+                {% if manto.aplicado %}
+                <td>
+                    <button class="btn btn-success">Hecho</button>
+                </td>
+                {% else %}
+                <td>
+                    <a href="{% url 'manto:checkList' manto.id %}" class="btn btn-danger">Pendiente</a>
+                </td>
+                {% endif %}
+                
+                
             </tr>
             {% endfor %}
         </tbody>

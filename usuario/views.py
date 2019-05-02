@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
+from django.core import serializers
 
 ## libresrias para el sign up
 from django.contrib.auth import login, authenticate
@@ -14,6 +15,7 @@ from django.contrib.auth import login, authenticate
 from usuario.forms import UserForm 
 
 from usuario.models import User
+from manto.models import Mantenimiento
 
 from django.views.generic import ListView
 
@@ -22,10 +24,11 @@ from django.views.generic import ListView
 
 ## funcion de la vista de la pagina principal(Login)
 def index(request):
-	return render(request, 'index.html')
+    
+    return render(request, 'index.html')
 
 def menuPrincipal(request):
-	return render(request, 'menus/menuPrincipal.html')
+    return render(request, 'menus/menuPrincipal.html')
 
 def signUp(request):
     if request.method == 'POST':
@@ -44,3 +47,14 @@ def signUp(request):
 class UserListView(ListView):
     model = User
     template_name = "Usuarios/listUsuario.html"
+
+def fechaManto(request):
+    if request.is_ajax:
+        fecha = request.GET.get('fecha')
+        print(fecha)
+        manto = Mantenimiento.objects.filter(fecha=fecha)
+        data = serializers.serialize('json', manto, fields={'fecha'})
+    else:
+        data='fail'
+    return HttpResponse(data, content_type='application/json')
+    

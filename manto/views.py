@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
 
@@ -43,4 +43,9 @@ class MantenimientoListView(ListView):
     template_name = "manto/mantoList.html"
 
     
-
+def MantenimientoRealizadoUpdate(request, pk):
+    #mantenimiento = Mantenimiento.objects.get(id=id_manto)
+    manto = get_object_or_404(Mantenimiento, pk=pk)
+    manto.aplicado=True
+    manto.save(update_fields=["aplicado"])
+    return HttpResponseRedirect(reverse_lazy("manto:listManto"))

@@ -20,5 +20,5 @@ from usuario.views import UserListView
 
 urlpatterns = [
 	url(r'^registrar/', views.signUp, name='signup'),
-	url(r'^lista/', UserListView.as_view(), name='listUser')	
+	url(r'^lista/', UserListView.as_view(), name='listUser'),
 ]

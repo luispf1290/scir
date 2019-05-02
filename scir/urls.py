@@ -21,12 +21,13 @@ from usuario import views
 urlpatterns = [
 	url(r'^$', views.index, name='first'),
 	url(r'^menu/$', login_required(views.menuPrincipal), name='menuPrincipal'),
+    url(r'^fecha_manto/$', login_required(views.fechaManto), name="fechaManto"),
     url(r'^admin/', admin.site.urls),
     url(r'^usuario/', include('usuario.urls', namespace='usuario')),
     url(r'^area/', include('area.urls', namespace='area')),
     url(r'^prendas/', include('prendas.urls', namespace = 'prendas')),
     url(r'^insumos/', include('insumos.urls', namespace = 'insumos')),
     url(r'^solicitud/', include('solicitud.urls', namespace='solicitud')),
-    url(r'^mantenimiento', include('manto.urls', namespace='manto')),
+    url(r'^mantenimiento/', include('manto.urls', namespace='manto')),
     url(r'^accounts/', include('registration.backends.default.urls')),
 ]
