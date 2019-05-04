@@ -51,9 +51,8 @@ class UserListView(ListView):
 def fechaManto(request):
     if request.is_ajax:
         fecha = request.GET.get('fecha')
-        print(fecha)
         manto = Mantenimiento.objects.filter(fecha=fecha)
-        data = serializers.serialize('json', manto, fields={'fecha'})
+        data = serializers.serialize('json', manto, fields={'fecha','aplicado', 'descripcion'})
     else:
         data='fail'
     return HttpResponse(data, content_type='application/json')
