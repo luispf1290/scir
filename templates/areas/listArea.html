@@ -4,11 +4,11 @@
 
 <div class="container contenedor">
 	{% if object_list %}
-	<h1 class="text-center">Lista de Areas</h1>
+	<h1 class="text-center">Lista de Áreas</h1>
 	<table class="table table-lg-responsive table-striped">
 		<thead class="text-center">
-			<th>Codigo</th>
-			<th>Area</th>
+			<th>Código</th>
+			<th>Área</th>
 			<th>Stock</th>
 			<th>Acciones</th>
 		</thead>
@@ -27,11 +27,11 @@
 		</tbody>
 	</table>
 
-	<a href="{% url 'area:newArea' %}" class="btn btn-primary btn-block btn-lg">Registar Area</a>
+	<a href="{% url 'area:newArea' %}" class="btn btn-primary btn-block btn-lg">Registar Área</a>
 
 	{% else %}
-	<h1 class="text-center">No hay areas registradas</h1>
-	<a href="{% url 'area:newArea' %}" class="btn btn-primary btn-block btn-lg">Registar Area</a>
+	<h1 class="text-center">No hay áreas registradas</h1>
+	<a href="{% url 'area:newArea' %}" class="btn btn-primary btn-block btn-lg">Registar Área</a>
 </div>
 {% endif %}
 {% endblock content %}

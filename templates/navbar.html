@@ -10,7 +10,7 @@
       <ul class="navbar-nav mr-auto">
         {% if request.user.is_superuser %}
         <li class="nav-item active">
-          <a class="nav-link" href="{% url "menuPrincipal" %}">Menu<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url "menuPrincipal" %}">Menú<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url "usuario:listUser" %}">Usuarios</a>
@@ -19,7 +19,7 @@
           <a class="nav-link" href="{% url "prendas:listPrenda" %}">Prendas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url "area:listAreas" %}">Areas</a>
+          <a class="nav-link" href="{% url "area:listAreas" %}">Áreas</a>
         </li>
         <li class="nav-item">
           <a href="{% url "insumos:listInsumo" %}" class="nav-link">Insumos</a>
@@ -29,7 +29,7 @@
         </li>
         {% else %}
         <li class="nav-item active">
-          <a class="nav-link" href="{% url "menuPrincipal" %}">Menu<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="{% url "menuPrincipal" %}">Menú<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'solicitud:newSolicitud' %}">Solicitud de servicio</a>

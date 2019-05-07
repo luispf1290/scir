@@ -4,7 +4,7 @@
 {% block title %}Eliminar {{ object.no_empleado }}{% endblock %}
 {% block content %}
 	<div class="row">
-		<h1 class="text-align-center">¿Estás seguro que deseas borrar el Usuario "{{ object.codigo}}"?</h1>
+		<h1 class="text-align-center">¿Estás seguro que deseas borrar el Área "{{ object.codigo}}"?</h1>
 		<p class="text-align-center">{{object.nombre_area}}</p>
 		<div class="col-sm-6 col-sm-offset-3">
 			<form method="POST">{% csrf_token %}

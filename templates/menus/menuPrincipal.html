@@ -3,7 +3,7 @@
 
 {% block content %}
 <section class=" container contenedor">
-	<h1 class=" text-center">Menu</h1>
+	<h1 class=" text-center">Menú</h1>
 	{% if request.user.is_superuser %}
 
 	<div class="row mt-3 text-center">
@@ -37,7 +37,7 @@
 				<img src="{% static 'img/menuPrincipal/area.png' %}" alt="" width="150" height="150">
 
 			</a>
-			<p>Areas</p>
+			<p>Áreas</p>
 		</div>
 		<div class="col-4">
 			<a href="{% url 'solicitud:newSolicitud' %}">
