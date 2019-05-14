@@ -21,7 +21,6 @@ from usuario import views
 urlpatterns = [
 	url(r'^$', views.index, name='first'),
 	url(r'^menu/$', login_required(views.menuPrincipal), name='menuPrincipal'),
-    url(r'^fecha_manto/$', login_required(views.fechaManto), name="fechaManto"),
     url(r'^admin/', admin.site.urls),
     url(r'^usuario/', include('usuario.urls', namespace='usuario')),
     url(r'^area/', include('area.urls', namespace='area')),

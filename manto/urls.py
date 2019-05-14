@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^nuevo/', login_required(MantenimientoCreateView.as_view()), name='newManto'),
     url(r'^lista/$', login_required(MantenimientoListView.as_view()), name='listManto'),
     url(r"^lista/(?P<pk>\d+)", login_required(views.MantenimientoRealizadoUpdate), name="checkList"),
+    url(r'^fecha_manto/$', login_required(views.fechaManto), name="fechaManto"),
     
 ]

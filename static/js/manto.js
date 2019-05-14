@@ -24,11 +24,11 @@ $(document).ready(fechaActual);
     
         $.ajax({
             type: "GET",
-            url: "/fecha_manto/",
+            url: "/mantenimiento/fecha_manto/",
             data: {'fecha': hoy},
             dataType: "json",
             success: function (data) {
-
+                console.log(data);
                 if (!data[0].fields.aplicado) {
                     var html="";
                     for (var i = 0; i < data.length; i++) {

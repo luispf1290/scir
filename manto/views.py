@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse_lazy
+from django.core import serializers
 
 from django.views.generic.edit import (
 		CreateView,
@@ -49,3 +50,12 @@ def MantenimientoRealizadoUpdate(request, pk):
     manto.aplicado=True
     manto.save(update_fields=["aplicado"])
     return HttpResponseRedirect(reverse_lazy("manto:listManto"))
+
+def fechaManto(request):
+    if request.is_ajax:
+        fecha = request.GET.get('fecha')
+        manto = Mantenimiento.objects.filter(fecha=fecha)
+        data = serializers.serialize('json', manto, fields={'fecha','aplicado', 'descripcion'})
+    else:
+        data='fail'
+    return HttpResponse(data, content_type='application/json')

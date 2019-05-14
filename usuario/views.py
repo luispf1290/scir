@@ -15,8 +15,6 @@ from django.contrib.auth import login, authenticate
 from usuario.forms import UserForm 
 
 from usuario.models import User
-from manto.models import Mantenimiento
-
 from django.views.generic import ListView
 
 
@@ -48,12 +46,5 @@ class UserListView(ListView):
     model = User
     template_name = "Usuarios/listUsuario.html"
 
-def fechaManto(request):
-    if request.is_ajax:
-        fecha = request.GET.get('fecha')
-        manto = Mantenimiento.objects.filter(fecha=fecha)
-        data = serializers.serialize('json', manto, fields={'fecha','aplicado', 'descripcion'})
-    else:
-        data='fail'
-    return HttpResponse(data, content_type='application/json')
+
     
