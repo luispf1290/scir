@@ -17,11 +17,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
-from manto.views import MantenimientoCreateView, MantenimientoListView
+from manto.views import MantenimientoCreateView, MantenimientoListView, MantenimientoUpdateView, MantenimientoDeleteView
 from manto import views
 
 urlpatterns = [
     url(r'^nuevo/', login_required(MantenimientoCreateView.as_view()), name='newManto'),
+    url(r"^modificar/(?P<pk>\d+)", login_required(MantenimientoUpdateView.as_view()), name="updateManto"),
+    url(r"^eliminar/(?P<pk>\d+)", login_required(MantenimientoDeleteView.as_view()), name="deleteManto"),
+    
     url(r'^lista/$', login_required(MantenimientoListView.as_view()), name='listManto'),
     url(r"^lista/(?P<pk>\d+)", login_required(views.MantenimientoRealizadoUpdate), name="checkList"),
     url(r'^fecha_manto/$', login_required(views.fechaManto), name="fechaManto"),

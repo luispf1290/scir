@@ -19,11 +19,14 @@
                 <td>{{ manto.descripcion }}</td>
                 {% if manto.aplicado %}
                 <td>
-                    <button class="btn btn-success">Hecho</button>
+                    <button class="btn btn-secondary">Hecho</button>
+                    <a href="{% url 'manto:deleteManto' manto.id %}" class="btn btn-danger">Eliminar</a>
                 </td>
                 {% else %}
                 <td>
-                    <a href="{% url 'manto:checkList' manto.id %}" class="btn btn-danger">Pendiente</a>
+                    <a href="{% url 'manto:checkList' manto.id %}" class="btn btn-success">Pendiente</a>
+                    <a href="{% url 'manto:updateManto' manto.id %}" class="btn btn-primary">Modificar</a>
+                    <a href="{% url 'manto:deleteManto' manto.id %}" class="btn btn-danger">Eliminar</a>
                 </td>
                 {% endif %}
                 

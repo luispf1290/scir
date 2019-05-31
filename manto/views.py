@@ -43,7 +43,19 @@ class MantenimientoListView(ListView):
     model = Mantenimiento
     template_name = "manto/mantoList.html"
 
-    
+class MantenimientoUpdateView(UpdateView):
+    model = Mantenimiento
+    template_name = "manto/mantoNew.html"
+    form_class = MantenimientoForm
+    success_url = reverse_lazy('manto:listManto')
+
+class MantenimientoDeleteView(DeleteView):
+    model = Mantenimiento
+    template_name = "manto/mantoDelete.html"
+    success_url = reverse_lazy('manto:listManto')
+
+
+
 def MantenimientoRealizadoUpdate(request, pk):
     #mantenimiento = Mantenimiento.objects.get(id=id_manto)
     manto = get_object_or_404(Mantenimiento, pk=pk)
