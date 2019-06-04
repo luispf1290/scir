@@ -505,23 +505,36 @@ class Reporte(View):
         canvas.setFont('Helvetica', 12)
         canvas.drawString(180, 710, 'Periodo que reporta')
 
-    def table(self, canvas, y, **kwargs):
-    
+    def table(self,req, canvas, y, **kwargs):
         reportes = []
-
         peso = [0.80, 0.70, 0.15, 0.35, 0.35, 0.45, 1.50, 0.65, 0.45, 0.25,
                 0.10, 0.25, 0.15, 0.05, 0.30, 0.15, 0.35, 0.35, 1.10, 0.75,
                 0.75, 0.20, 0.10, 0.40, 1.00]
 
         resultado = []
+        print(kwargs['year'], kwargs['opciones'], kwargs['opcion'])
 
         prendas = Prendas.objects.values('nombre_prenda')
-        if(kwargs['year'] != 0):
+        if(kwargs['year'] != 0 and kwargs['opciones'] == '0' and kwargs['opcion'] == '0'):
             for prenda in prendas:
                 report = Solicitud.objects.filter(fk_integral__fecha__year=kwargs['year'], fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
                 'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
                 reportes.append(report)
 
+        elif(kwargs['year'] != 0 and kwargs['opciones'] != 0 and kwargs['opciones'] == '1' and kwargs['opcion'] == 'p'):
+            start_date = datetime(int(kwargs['year']), 1, 1)
+            end_date = datetime(int(kwargs['year']), 6, 30)
+            print('primer semestre',)
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+        elif(kwargs['year'] != 0 and kwargs['opciones'] != 0 and kwargs['opciones'] == '1' and kwargs['opcion'] == 's'):
+            start_date = datetime(int(kwargs['year']), 7, 1)
+            end_date = datetime(int(kwargs['year']), 12, 31)    
+            print("segundo semestre")
+        
+        
         j = 0
         while(j < 25):
             resultado.append(reportes[j]['total_ropa'] * peso[j])
@@ -671,7 +684,7 @@ class Reporte(View):
         y = 600
         if(len(anio) != 0 ):
             self.headerPdf(c)
-            self.table(c, y, year = anio, opciones = ops, opcion = op)
+            self.table(request, c, y, year = anio, opciones = ops, opcion = op)
             self.totales(c)
 
         c.showPage()
