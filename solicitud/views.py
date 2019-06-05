@@ -515,26 +515,116 @@ class Reporte(View):
         print(kwargs['year'], kwargs['opciones'], kwargs['opcion'])
 
         prendas = Prendas.objects.values('nombre_prenda')
+        ### Anual ##
         if(kwargs['year'] != 0 and kwargs['opciones'] == '0' and kwargs['opcion'] == '0'):
             for prenda in prendas:
                 report = Solicitud.objects.filter(fk_integral__fecha__year=kwargs['year'], fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
                 'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
                 reportes.append(report)
+        ### End Anual ##
 
+        ### Semestral ##
         elif(kwargs['year'] != 0 and kwargs['opciones'] != 0 and kwargs['opciones'] == '1' and kwargs['opcion'] == 'p'):
             start_date = datetime(int(kwargs['year']), 1, 1)
             end_date = datetime(int(kwargs['year']), 6, 30)
-            print('primer semestre',)
             for prenda in prendas:
                 report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
                 'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
                 reportes.append(report)
-        elif(kwargs['year'] != 0 and kwargs['opciones'] != 0 and kwargs['opciones'] == '1' and kwargs['opcion'] == 's'):
+        
+        elif(kwargs['year'] != 0 and  kwargs['opciones'] == '1' and kwargs['opcion'] == 's'):
             start_date = datetime(int(kwargs['year']), 7, 1)
             end_date = datetime(int(kwargs['year']), 12, 31)    
-            print("segundo semestre")
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+        ### -- end Semetre -- ###
+
+        ### -- Trimestral -- ###
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '2'and kwargs['opcion'] == 'P'):
+            start_date = datetime(int(kwargs['year']), 1, 1)
+            end_date = datetime(int(kwargs['year']), 3, 31) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '2'and kwargs['opcion'] == 'S'):
+            start_date = datetime(int(kwargs['year']), 4, 1)
+            end_date = datetime(int(kwargs['year']), 6, 30) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '2'and kwargs['opcion'] == 'T'):
+            start_date = datetime(int(kwargs['year']), 7, 1)
+            end_date = datetime(int(kwargs['year']), 9, 30) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '2'and kwargs['opcion'] == 'C'):
+            start_date = datetime(int(kwargs['year']), 10, 1)
+            end_date = datetime(int(kwargs['year']), 12, 31) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+        ### -- End Trimestral -- ###
+
+        ### -- Bimestral -- ##
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '3'and kwargs['opcion'] == 'P'):
+            start_date = datetime(int(kwargs['year']), 1, 1)
+            end_date = datetime(int(kwargs['year']), 2, 28) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '3'and kwargs['opcion'] == 'S'):
+            start_date = datetime(int(kwargs['year']), 3, 1)
+            end_date = datetime(int(kwargs['year']), 4, 30) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '3'and kwargs['opcion'] == 'T'):
+            start_date = datetime(int(kwargs['year']), 5, 1)
+            end_date = datetime(int(kwargs['year']), 6, 30) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '3'and kwargs['opcion'] == 'C'):
+            start_date = datetime(int(kwargs['year']), 7, 1)
+            end_date = datetime(int(kwargs['year']), 8, 31) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '3'and kwargs['opcion'] == 'Q'):
+            start_date = datetime(int(kwargs['year']), 9, 1)
+            end_date = datetime(int(kwargs['year']), 10, 31) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
         
-        
+        elif(kwargs['year'] != 0 and kwargs['opciones'] == '3'and kwargs['opcion'] == 'P'):
+            start_date = datetime(int(kwargs['year']), 11, 1)
+            end_date = datetime(int(kwargs['year']), 12, 31) 
+            for prenda in prendas:
+                report = Solicitud.objects.filter(fk_integral__fecha__range=(start_date, end_date), fk_prenda__nombre_prenda=prenda['nombre_prenda']).values(
+                'fk_prenda__nombre_prenda').annotate(total_ropa=Sum('total_lav')).get()
+                reportes.append(report)
+        ### -- end Bimestral -- ##
+
         j = 0
         while(j < 25):
             resultado.append(reportes[j]['total_ropa'] * peso[j])
